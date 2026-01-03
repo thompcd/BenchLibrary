@@ -1,0 +1,53 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vs
+.vscode
+*.user
+*.suo
+
+# Build outputs
+**/bin
+**/obj
+**/out
+**/publish
+
+# Test results
+**/TestResults
+**/coverage
+
+# NuGet packages
+**/nupkgs
+
+# Documentation
+docs/
+
+# Samples (not needed for deployment)
+samples/
+
+# Tests (not needed for deployment)
+tests/
+
+# Local settings
+appsettings.Development.json
+*.local.json
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp

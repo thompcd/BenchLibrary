@@ -4,15 +4,30 @@ using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure port for Railway (uses PORT environment variable)
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://*:{port}");
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
+builder.Services.AddHealthChecks();
 
 // Add BenchLibrary services
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Data Source=benchlibrary.db";
-builder.Services.AddBenchLibrarySqlite(connectionString);
+// Use PostgreSQL if DATABASE_URL is set (Railway), otherwise SQLite
+var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+if (!string.IsNullOrEmpty(databaseUrl))
+{
+    // Railway PostgreSQL connection string
+    builder.Services.AddBenchLibraryPostgreSql(databaseUrl);
+}
+else
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+        ?? "Data Source=benchlibrary.db";
+    builder.Services.AddBenchLibrarySqlite(connectionString);
+}
 
 // Add application services
 builder.Services.AddScoped<SpcDataService>();
@@ -24,12 +39,24 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    app.UseHsts();
+    // Don't use HTTPS redirection when running behind Railway's proxy
+    if (Environment.GetEnvironmentVariable("RAILWAY_ENVIRONMENT") == null)
+    {
+        app.UseHsts();
+    }
 }
 
-app.UseHttpsRedirection();
+// Only redirect to HTTPS in non-Railway environments
+if (Environment.GetEnvironmentVariable("RAILWAY_ENVIRONMENT") == null)
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseStaticFiles();
 app.UseRouting();
+
+// Health check endpoint
+app.MapHealthChecks("/health");
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
