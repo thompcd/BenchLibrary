@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Six Sigma and Statistical Process Control (SPC) calculations for BenchLibrary.</Description>
+    <PackageTags>six-sigma;spc;manufacturing;quality;cpk;control-chart;lean</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BenchLibrary.Core\BenchLibrary.Core.csproj" />
+  </ItemGroup>
+
+</Project>

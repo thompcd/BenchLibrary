@@ -1,0 +1,84 @@
+@page "/about"
+
+<PageTitle>About BenchLibrary</PageTitle>
+
+<MudText Typo="Typo.h4" GutterBottom="true">About BenchLibrary</MudText>
+
+<MudGrid>
+    <MudItem xs="12" md="8">
+        <MudPaper Class="pa-4" Elevation="2">
+            <MudText Typo="Typo.h6" GutterBottom="true">Open-Source Lean Six Sigma Library</MudText>
+
+            <MudText Typo="Typo.body1" Class="mb-4">
+                BenchLibrary is an open-source .NET library suite designed for Lean Six Sigma
+                manufacturing processes, specifically targeting IoT/embedded electronics OEMs.
+            </MudText>
+
+            <MudText Typo="Typo.subtitle1" GutterBottom="true">Key Features</MudText>
+            <MudList T="string" Dense="true">
+                <MudListItem Icon="@Icons.Material.Filled.ShowChart">
+                    Statistical Process Control (SPC) with X-bar and R charts
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.Speed">
+                    Process Capability Analysis (Cp, Cpk, Pp, Ppk)
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.BarChart">
+                    Pareto Analysis for defect prioritization
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.TrendingUp">
+                    Sigma Level and DPMO calculations
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.Storage">
+                    Entity Framework Core data persistence
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.Web">
+                    Blazor Server dashboard with MudBlazor UI
+                </MudListItem>
+            </MudList>
+
+            <MudDivider Class="my-4" />
+
+            <MudText Typo="Typo.subtitle1" GutterBottom="true">Technology Stack</MudText>
+            <MudChipSet T="string" ReadOnly="true">
+                <MudChip T="string" Color="Color.Primary">.NET 8</MudChip>
+                <MudChip T="string" Color="Color.Primary">C# 12</MudChip>
+                <MudChip T="string" Color="Color.Secondary">Blazor Server</MudChip>
+                <MudChip T="string" Color="Color.Secondary">MudBlazor</MudChip>
+                <MudChip T="string" Color="Color.Info">Entity Framework Core</MudChip>
+                <MudChip T="string" Color="Color.Info">PostgreSQL / SQLite</MudChip>
+            </MudChipSet>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" md="4">
+        <MudPaper Class="pa-4" Elevation="2">
+            <MudText Typo="Typo.h6" GutterBottom="true">Project Info</MudText>
+
+            <MudList T="string" Dense="true">
+                <MudListItem>
+                    <MudIcon Icon="@Icons.Material.Filled.Code" Class="mr-2" />
+                    <strong>License:</strong> MIT
+                </MudListItem>
+                <MudListItem>
+                    <MudIcon Icon="@Icons.Material.Filled.Architecture" Class="mr-2" />
+                    <strong>Architecture:</strong> Layered DDD
+                </MudListItem>
+                <MudListItem>
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-2" />
+                    <strong>Quality:</strong> 80%+ Coverage
+                </MudListItem>
+            </MudList>
+
+            <MudDivider Class="my-4" />
+
+            <MudText Typo="Typo.subtitle2" GutterBottom="true">Solution Structure</MudText>
+            <MudText Typo="Typo.body2" Style="font-family: monospace;">
+                BenchLibrary/<br />
+                ├── BenchLibrary.Core<br />
+                ├── BenchLibrary.SixSigma<br />
+                ├── BenchLibrary.Data<br />
+                └── BenchLibrary.Web
+            </MudText>
+        </MudPaper>
+    </MudItem>
+</MudGrid>

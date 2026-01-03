@@ -1,0 +1,119 @@
+@page "/pareto"
+@inject SpcDataService SpcService
+
+<PageTitle>Pareto Analysis</PageTitle>
+
+<MudText Typo="Typo.h4" GutterBottom="true">Pareto Analysis - Defect Prioritization</MudText>
+
+@if (_result != null)
+{
+    <MudGrid>
+        <MudItem xs="12" lg="8">
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.h6" GutterBottom="true">@(_result.Title ?? "Defect Analysis")</MudText>
+
+                <MudSimpleTable Dense="true" Striped="true" Hover="true">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Defect Type</th>
+                            <th style="text-align: right;">Count</th>
+                            <th style="text-align: right;">Percentage</th>
+                            <th style="text-align: right;">Cumulative %</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in _result.Items)
+                        {
+                            <tr>
+                                <td>@item.Rank</td>
+                                <td><strong>@item.Category</strong></td>
+                                <td style="text-align: right;">@item.Count</td>
+                                <td style="text-align: right;">@item.Percentage.ToString("F1")%</td>
+                                <td style="text-align: right;">
+                                    <MudProgressLinear Color="@(item.IsVitalFew ? Color.Error : Color.Info)"
+                                                       Value="@item.CumulativePercentage"
+                                                       Style="min-width: 100px;" />
+                                    @item.CumulativePercentage.ToString("F1")%
+                                </td>
+                                <td>
+                                    @if (item.IsVitalFew)
+                                    {
+                                        <MudChip T="string" Color="Color.Error" Size="Size.Small">Vital Few</MudChip>
+                                    }
+                                    else
+                                    {
+                                        <MudChip T="string" Color="Color.Default" Size="Size.Small">Trivial Many</MudChip>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"><strong>Total</strong></td>
+                            <td style="text-align: right;"><strong>@_result.TotalCount</strong></td>
+                            <td style="text-align: right;"><strong>100%</strong></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </MudSimpleTable>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" lg="4">
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.h6" GutterBottom="true">80/20 Analysis</MudText>
+
+                <MudAlert Severity="Severity.Info" Class="mb-4">
+                    The <strong>Pareto Principle</strong> states that roughly 80% of effects come from 20% of causes.
+                </MudAlert>
+
+                <MudList T="string">
+                    <MudListItem Icon="@Icons.Material.Filled.PriorityHigh">
+                        <MudText>
+                            <strong>@_result.VitalFewCount</strong> defect types cause
+                            <strong>@_result.VitalFewCountPercentage.ToString("F0")%</strong> of issues
+                        </MudText>
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Category">
+                        <MudText>
+                            <strong>@_result.VitalFewCategoryPercentage.ToString("F0")%</strong> of categories
+                            are in the "Vital Few"
+                        </MudText>
+                    </MudListItem>
+                </MudList>
+
+                <MudDivider Class="my-4" />
+
+                <MudText Typo="Typo.subtitle2" GutterBottom="true">Focus Areas (Vital Few)</MudText>
+                @foreach (var item in _result.VitalFew)
+                {
+                    <MudChip T="string" Color="Color.Error" Class="ma-1">@item.Category (@item.Count)</MudChip>
+                }
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+}
+
+<MudPaper Class="mt-4 pa-4" Elevation="2">
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="RefreshData">
+        <MudIcon Icon="@Icons.Material.Filled.Refresh" Class="mr-2" /> Regenerate Data
+    </MudButton>
+</MudPaper>
+
+@code {
+    private ParetoResult? _result;
+
+    protected override void OnInitialized()
+    {
+        RefreshData();
+    }
+
+    private void RefreshData()
+    {
+        _result = SpcService.GetParetoAnalysis();
+    }
+}
