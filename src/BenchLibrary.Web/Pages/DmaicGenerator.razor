@@ -1,0 +1,588 @@
+@page "/dmaic-generator"
+
+<PageTitle>DMAIC Work Instruction Generator</PageTitle>
+
+<MudText Typo="Typo.h4" GutterBottom="true">DMAIC Work Instruction Generator</MudText>
+<MudText Typo="Typo.body1" Class="mb-4">
+    Fill in the blanks below to generate a complete DMAIC-based work instruction for your process improvement project.
+</MudText>
+
+<MudGrid>
+    <!-- Input Section -->
+    <MudItem xs="12" lg="6">
+        <MudExpansionPanels MultiExpansion="true" Elevation="2">
+            <!-- DEFINE Phase -->
+            <MudExpansionPanel @bind-Expanded="_defineExpanded">
+                <TitleContent>
+                    <div class="d-flex align-center">
+                        <MudIcon Icon="@Icons.Material.Filled.Flag" Class="mr-2" Color="Color.Primary" />
+                        <MudText Typo="Typo.h6"><strong>D</strong>efine</MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudTextField @bind-Value="_processName" Label="Process Name"
+                                  Placeholder="e.g., Widget Assembly Line"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_problemStatement" Label="Problem Statement"
+                                  Placeholder="e.g., cycle time exceeds target by 15%"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" Lines="2" />
+
+                    <MudTextField @bind-Value="_projectScope" Label="Project Scope"
+                                  Placeholder="e.g., Station 3 through Station 7"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_projectGoal" Label="Project Goal"
+                                  Placeholder="e.g., reduce cycle time by 20%"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_businessCase" Label="Business Case / Impact"
+                                  Placeholder="e.g., $50K annual savings, improved delivery times"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" Lines="2" />
+
+                    <MudTextField @bind-Value="_stakeholders" Label="Key Stakeholders"
+                                  Placeholder="e.g., Production Manager, Quality Lead, Operators"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_projectOwner" Label="Project Owner"
+                                  Placeholder="e.g., John Smith, Process Engineer"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+                </ChildContent>
+            </MudExpansionPanel>
+
+            <!-- MEASURE Phase -->
+            <MudExpansionPanel @bind-Expanded="_measureExpanded">
+                <TitleContent>
+                    <div class="d-flex align-center">
+                        <MudIcon Icon="@Icons.Material.Filled.Speed" Class="mr-2" Color="Color.Secondary" />
+                        <MudText Typo="Typo.h6"><strong>M</strong>easure</MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudTextField @bind-Value="_primaryMetric" Label="Primary Metric (Y)"
+                                  Placeholder="e.g., cycle time in seconds"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_secondaryMetrics" Label="Secondary Metrics"
+                                  Placeholder="e.g., defect rate, throughput, first pass yield"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_baselinePerformance" Label="Baseline Performance"
+                                  Placeholder="e.g., 45 seconds average, sigma level 2.5"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_targetPerformance" Label="Target Performance"
+                                  Placeholder="e.g., 36 seconds average, sigma level 3.5"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_dataCollectionMethod" Label="Data Collection Method"
+                                  Placeholder="e.g., automated sensor logging every 30 seconds"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" Lines="2" />
+
+                    <MudTextField @bind-Value="_sampleSize" Label="Sample Size / Frequency"
+                                  Placeholder="e.g., 100 samples per shift, 3 shifts per day"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_measurementSystem" Label="Measurement System"
+                                  Placeholder="e.g., calibrated stopwatch, Gage R&R completed"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+                </ChildContent>
+            </MudExpansionPanel>
+
+            <!-- ANALYZE Phase -->
+            <MudExpansionPanel @bind-Expanded="_analyzeExpanded">
+                <TitleContent>
+                    <div class="d-flex align-center">
+                        <MudIcon Icon="@Icons.Material.Filled.Analytics" Class="mr-2" Color="Color.Warning" />
+                        <MudText Typo="Typo.h6"><strong>A</strong>nalyze</MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudTextField @bind-Value="_analysisTools" Label="Analysis Tools Used"
+                                  Placeholder="e.g., Fishbone diagram, 5 Whys, Pareto analysis"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_potentialCauses" Label="Potential Causes Identified"
+                                  Placeholder="e.g., material variation, operator training gaps, equipment wear"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" Lines="2" />
+
+                    <MudTextField @bind-Value="_rootCauses" Label="Verified Root Cause(s)"
+                                  Placeholder="e.g., worn conveyor bearings causing intermittent delays"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" Lines="2" />
+
+                    <MudTextField @bind-Value="_dataFindings" Label="Key Data Findings"
+                                  Placeholder="e.g., 80% of delays occur at Station 5, correlation with temperature"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" Lines="2" />
+
+                    <MudTextField @bind-Value="_processCapability" Label="Process Capability (Current)"
+                                  Placeholder="e.g., Cpk = 0.85, Ppk = 0.78"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+                </ChildContent>
+            </MudExpansionPanel>
+
+            <!-- IMPROVE Phase -->
+            <MudExpansionPanel @bind-Expanded="_improveExpanded">
+                <TitleContent>
+                    <div class="d-flex align-center">
+                        <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Class="mr-2" Color="Color.Success" />
+                        <MudText Typo="Typo.h6"><strong>I</strong>mprove</MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudTextField @bind-Value="_solutionDescription" Label="Solution Description"
+                                  Placeholder="e.g., install new conveyor bearings, implement preventive maintenance"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" Lines="2" />
+
+                    <MudTextField @bind-Value="_implementationSteps" Label="Implementation Steps"
+                                  Placeholder="e.g., 1) Order parts 2) Schedule downtime 3) Install 4) Validate"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" Lines="3" />
+
+                    <MudTextField @bind-Value="_resourcesRequired" Label="Resources Required"
+                                  Placeholder="e.g., 2 maintenance technicians, 4 hours downtime, $2,500 parts"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_pilotResults" Label="Pilot/Test Results"
+                                  Placeholder="e.g., cycle time reduced to 35 seconds in pilot area"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" Lines="2" />
+
+                    <MudTextField @bind-Value="_expectedBenefits" Label="Expected Benefits"
+                                  Placeholder="e.g., 22% cycle time reduction, $60K annual savings"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_riskMitigation" Label="Risks and Mitigation"
+                                  Placeholder="e.g., production delay risk - schedule during planned shutdown"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" Lines="2" />
+                </ChildContent>
+            </MudExpansionPanel>
+
+            <!-- CONTROL Phase -->
+            <MudExpansionPanel @bind-Expanded="_controlExpanded">
+                <TitleContent>
+                    <div class="d-flex align-center">
+                        <MudIcon Icon="@Icons.Material.Filled.Security" Class="mr-2" Color="Color.Error" />
+                        <MudText Typo="Typo.h6"><strong>C</strong>ontrol</MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudTextField @bind-Value="_controlMethods" Label="Control Methods"
+                                  Placeholder="e.g., SPC control charts, daily audits, PM schedule"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" Lines="2" />
+
+                    <MudTextField @bind-Value="_controlLimits" Label="Control Limits"
+                                  Placeholder="e.g., UCL = 40 sec, LCL = 30 sec, Target = 36 sec"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_monitoringFrequency" Label="Monitoring Frequency"
+                                  Placeholder="e.g., hourly checks, weekly control chart review"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_responsePlan" Label="Out-of-Control Response Plan"
+                                  Placeholder="e.g., stop line, notify supervisor, investigate using checklist"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" Lines="2" />
+
+                    <MudTextField @bind-Value="_documentation" Label="Documentation Updates"
+                                  Placeholder="e.g., update SOP-123, add to PM checklist, training matrix"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_trainingRequired" Label="Training Required"
+                                  Placeholder="e.g., operator retraining on new procedure, maintenance certification"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+
+                    <MudTextField @bind-Value="_sustainmentOwner" Label="Sustainment Owner"
+                                  Placeholder="e.g., Area Supervisor, reviewed monthly"
+                                  Variant="Variant.Outlined" Class="mb-3" FullWidth="true" />
+                </ChildContent>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+
+        <div class="d-flex gap-2 mt-4">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="GenerateDocument" StartIcon="@Icons.Material.Filled.Description">
+                Generate Work Instruction
+            </MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="ClearAll" StartIcon="@Icons.Material.Filled.Clear">
+                Clear All
+            </MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="LoadExample" StartIcon="@Icons.Material.Filled.AutoFixHigh">
+                Load Example
+            </MudButton>
+        </div>
+    </MudItem>
+
+    <!-- Output Section -->
+    <MudItem xs="12" lg="6">
+        <MudPaper Class="pa-4" Elevation="2" Style="position: sticky; top: 20px;">
+            <div class="d-flex justify-space-between align-center mb-3">
+                <MudText Typo="Typo.h6">Generated Work Instruction</MudText>
+                @if (_documentGenerated)
+                {
+                    <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="CopyToClipboard" StartIcon="@Icons.Material.Filled.ContentCopy" Size="Size.Small">
+                        Copy
+                    </MudButton>
+                }
+            </div>
+
+            @if (!_documentGenerated)
+            {
+                <MudAlert Severity="Severity.Info" Class="mb-3">
+                    Fill in the template fields and click "Generate Work Instruction" to preview your document.
+                </MudAlert>
+            }
+            else
+            {
+                <MudPaper Class="pa-4" Elevation="0" Style="background-color: var(--mud-palette-background-grey); max-height: 70vh; overflow-y: auto;">
+                    <div style="font-family: 'Segoe UI', sans-serif; line-height: 1.6;">
+                        @((MarkupString)_generatedDocument)
+                    </div>
+                </MudPaper>
+            }
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+<MudSnackbar @bind-Open="_snackbarOpen" Color="@_snackbarColor">
+    @_snackbarMessage
+</MudSnackbar>
+
+@code {
+    // Expansion panel states
+    private bool _defineExpanded = true;
+    private bool _measureExpanded = true;
+    private bool _analyzeExpanded = true;
+    private bool _improveExpanded = true;
+    private bool _controlExpanded = true;
+
+    // Define phase fields
+    private string _processName = "";
+    private string _problemStatement = "";
+    private string _projectScope = "";
+    private string _projectGoal = "";
+    private string _businessCase = "";
+    private string _stakeholders = "";
+    private string _projectOwner = "";
+
+    // Measure phase fields
+    private string _primaryMetric = "";
+    private string _secondaryMetrics = "";
+    private string _baselinePerformance = "";
+    private string _targetPerformance = "";
+    private string _dataCollectionMethod = "";
+    private string _sampleSize = "";
+    private string _measurementSystem = "";
+
+    // Analyze phase fields
+    private string _analysisTools = "";
+    private string _potentialCauses = "";
+    private string _rootCauses = "";
+    private string _dataFindings = "";
+    private string _processCapability = "";
+
+    // Improve phase fields
+    private string _solutionDescription = "";
+    private string _implementationSteps = "";
+    private string _resourcesRequired = "";
+    private string _pilotResults = "";
+    private string _expectedBenefits = "";
+    private string _riskMitigation = "";
+
+    // Control phase fields
+    private string _controlMethods = "";
+    private string _controlLimits = "";
+    private string _monitoringFrequency = "";
+    private string _responsePlan = "";
+    private string _documentation = "";
+    private string _trainingRequired = "";
+    private string _sustainmentOwner = "";
+
+    // Output state
+    private bool _documentGenerated = false;
+    private string _generatedDocument = "";
+
+    // Snackbar state
+    private bool _snackbarOpen = false;
+    private string _snackbarMessage = "";
+    private Color _snackbarColor = Color.Success;
+
+    private void GenerateDocument()
+    {
+        var doc = $@"
+<h2 style='color: #1976d2; border-bottom: 2px solid #1976d2; padding-bottom: 8px;'>
+    DMAIC Work Instruction
+</h2>
+<p><strong>Process:</strong> {Sanitize(_processName)}</p>
+<p><strong>Owner:</strong> {Sanitize(_projectOwner)}</p>
+<p><strong>Generated:</strong> {DateTime.Now:MMMM dd, yyyy}</p>
+
+<hr style='margin: 20px 0;' />
+
+<h3 style='color: #1976d2;'>📍 DEFINE Phase</h3>
+<table style='width: 100%; border-collapse: collapse; margin-bottom: 20px;'>
+    <tr style='background-color: #e3f2fd;'>
+        <td style='padding: 8px; border: 1px solid #ddd; width: 30%;'><strong>Problem Statement</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_problemStatement)}</td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Project Scope</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_projectScope)}</td>
+    </tr>
+    <tr style='background-color: #e3f2fd;'>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Project Goal</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_projectGoal)}</td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Business Case</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_businessCase)}</td>
+    </tr>
+    <tr style='background-color: #e3f2fd;'>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Key Stakeholders</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_stakeholders)}</td>
+    </tr>
+</table>
+
+<h3 style='color: #388e3c;'>📊 MEASURE Phase</h3>
+<table style='width: 100%; border-collapse: collapse; margin-bottom: 20px;'>
+    <tr style='background-color: #e8f5e9;'>
+        <td style='padding: 8px; border: 1px solid #ddd; width: 30%;'><strong>Primary Metric (Y)</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_primaryMetric)}</td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Secondary Metrics</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_secondaryMetrics)}</td>
+    </tr>
+    <tr style='background-color: #e8f5e9;'>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Baseline Performance</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_baselinePerformance)}</td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Target Performance</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_targetPerformance)}</td>
+    </tr>
+    <tr style='background-color: #e8f5e9;'>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Data Collection Method</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_dataCollectionMethod)}</td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Sample Size / Frequency</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_sampleSize)}</td>
+    </tr>
+    <tr style='background-color: #e8f5e9;'>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Measurement System</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_measurementSystem)}</td>
+    </tr>
+</table>
+
+<h3 style='color: #f57c00;'>🔍 ANALYZE Phase</h3>
+<table style='width: 100%; border-collapse: collapse; margin-bottom: 20px;'>
+    <tr style='background-color: #fff3e0;'>
+        <td style='padding: 8px; border: 1px solid #ddd; width: 30%;'><strong>Analysis Tools Used</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_analysisTools)}</td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Potential Causes</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_potentialCauses)}</td>
+    </tr>
+    <tr style='background-color: #fff3e0;'>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Verified Root Cause(s)</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>{Sanitize(_rootCauses)}</strong></td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Key Data Findings</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_dataFindings)}</td>
+    </tr>
+    <tr style='background-color: #fff3e0;'>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Process Capability</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_processCapability)}</td>
+    </tr>
+</table>
+
+<h3 style='color: #7b1fa2;'>🚀 IMPROVE Phase</h3>
+<table style='width: 100%; border-collapse: collapse; margin-bottom: 20px;'>
+    <tr style='background-color: #f3e5f5;'>
+        <td style='padding: 8px; border: 1px solid #ddd; width: 30%;'><strong>Solution Description</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_solutionDescription)}</td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Implementation Steps</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_implementationSteps)}</td>
+    </tr>
+    <tr style='background-color: #f3e5f5;'>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Resources Required</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_resourcesRequired)}</td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Pilot Results</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_pilotResults)}</td>
+    </tr>
+    <tr style='background-color: #f3e5f5;'>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Expected Benefits</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_expectedBenefits)}</td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Risks & Mitigation</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_riskMitigation)}</td>
+    </tr>
+</table>
+
+<h3 style='color: #d32f2f;'>🛡️ CONTROL Phase</h3>
+<table style='width: 100%; border-collapse: collapse; margin-bottom: 20px;'>
+    <tr style='background-color: #ffebee;'>
+        <td style='padding: 8px; border: 1px solid #ddd; width: 30%;'><strong>Control Methods</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_controlMethods)}</td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Control Limits</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_controlLimits)}</td>
+    </tr>
+    <tr style='background-color: #ffebee;'>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Monitoring Frequency</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_monitoringFrequency)}</td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Response Plan</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_responsePlan)}</td>
+    </tr>
+    <tr style='background-color: #ffebee;'>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Documentation Updates</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_documentation)}</td>
+    </tr>
+    <tr>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Training Required</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_trainingRequired)}</td>
+    </tr>
+    <tr style='background-color: #ffebee;'>
+        <td style='padding: 8px; border: 1px solid #ddd;'><strong>Sustainment Owner</strong></td>
+        <td style='padding: 8px; border: 1px solid #ddd;'>{Sanitize(_sustainmentOwner)}</td>
+    </tr>
+</table>
+
+<hr style='margin: 20px 0;' />
+
+<p style='font-size: 0.9em; color: #666;'>
+    <em>This work instruction was generated using the DMAIC methodology.
+    All changes should be validated before implementation and documented in the appropriate quality management system.</em>
+</p>
+";
+
+        _generatedDocument = doc;
+        _documentGenerated = true;
+        ShowSnackbar("Work instruction generated successfully!", Color.Success);
+    }
+
+    private string Sanitize(string? input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+            return "<em style='color: #999;'>[Not specified]</em>";
+
+        return System.Net.WebUtility.HtmlEncode(input);
+    }
+
+    private void ClearAll()
+    {
+        // Define
+        _processName = "";
+        _problemStatement = "";
+        _projectScope = "";
+        _projectGoal = "";
+        _businessCase = "";
+        _stakeholders = "";
+        _projectOwner = "";
+
+        // Measure
+        _primaryMetric = "";
+        _secondaryMetrics = "";
+        _baselinePerformance = "";
+        _targetPerformance = "";
+        _dataCollectionMethod = "";
+        _sampleSize = "";
+        _measurementSystem = "";
+
+        // Analyze
+        _analysisTools = "";
+        _potentialCauses = "";
+        _rootCauses = "";
+        _dataFindings = "";
+        _processCapability = "";
+
+        // Improve
+        _solutionDescription = "";
+        _implementationSteps = "";
+        _resourcesRequired = "";
+        _pilotResults = "";
+        _expectedBenefits = "";
+        _riskMitigation = "";
+
+        // Control
+        _controlMethods = "";
+        _controlLimits = "";
+        _monitoringFrequency = "";
+        _responsePlan = "";
+        _documentation = "";
+        _trainingRequired = "";
+        _sustainmentOwner = "";
+
+        _documentGenerated = false;
+        _generatedDocument = "";
+
+        ShowSnackbar("All fields cleared.", Color.Info);
+    }
+
+    private void LoadExample()
+    {
+        // Define
+        _processName = "PCB Solder Paste Application";
+        _problemStatement = "Solder paste volume inconsistency causing 3.2% defect rate on SMT line, exceeding 1% target";
+        _projectScope = "Solder paste printing station (SP-01) on SMT Line 3";
+        _projectGoal = "Reduce solder paste defect rate from 3.2% to below 1% within 6 weeks";
+        _businessCase = "Estimated $85K annual savings from reduced rework and scrap; improved customer delivery metrics";
+        _stakeholders = "SMT Line Supervisor, Quality Engineer, Maintenance Lead, Production Manager";
+        _projectOwner = "Sarah Chen, Process Engineer";
+
+        // Measure
+        _primaryMetric = "Solder paste volume (measured in mm³)";
+        _secondaryMetrics = "Paste height, area coverage, transfer efficiency percentage";
+        _baselinePerformance = "Mean volume: 0.42 mm³, Std Dev: 0.08 mm³, Cpk: 0.72";
+        _targetPerformance = "Mean volume: 0.45 mm³, Std Dev: 0.03 mm³, Cpk: 1.33";
+        _dataCollectionMethod = "Automated 3D SPI inspection after each stencil print cycle";
+        _sampleSize = "100% inspection, data aggregated per hour and per stencil cleaning cycle";
+        _measurementSystem = "Koh Young SPI system, Gage R&R completed (9.8% contribution)";
+
+        // Analyze
+        _analysisTools = "Fishbone diagram, Multi-Vari analysis, Regression analysis, DOE";
+        _potentialCauses = "Stencil wear, squeegee pressure variation, paste viscosity changes, board warpage, stencil cleaning frequency";
+        _rootCauses = "1) Stencil aperture wear after 50K cycles 2) Inadequate stencil cleaning frequency (every 10 prints vs. recommended 5)";
+        _dataFindings = "Strong correlation (R²=0.84) between print count since cleaning and volume variance; aperture measurements show 12% enlargement on high-use stencils";
+        _processCapability = "Current Cpk: 0.72, Ppk: 0.68";
+
+        // Improve
+        _solutionDescription = "1) Implement stencil replacement schedule at 40K cycles 2) Reduce cleaning interval to every 5 prints 3) Add paste viscosity monitoring";
+        _implementationSteps = "1) Order 3 replacement stencils 2) Update PM schedule in MES 3) Retrain operators on new cleaning protocol 4) Install viscosity sensor 5) Run pilot for 1 week 6) Full deployment";
+        _resourcesRequired = "3 new stencils ($1,200 each), viscosity sensor ($800), 4 hours operator training, 2 hours MES configuration";
+        _pilotResults = "Pilot achieved Cpk of 1.45, defect rate reduced to 0.6% over 5-day trial";
+        _expectedBenefits = "Defect rate reduction to <1%, Cpk improvement to >1.33, $85K annual savings, 15% reduction in line stoppages";
+        _riskMitigation = "Risk: Production delay during pilot - Mitigation: Run pilot on weekend shift; Risk: Operator resistance - Mitigation: Involve operators in solution design";
+
+        // Control
+        _controlMethods = "SPC control charts on SPI data, automated alerts for out-of-spec conditions, monthly stencil inspection";
+        _controlLimits = "Volume: UCL = 0.52 mm³, LCL = 0.38 mm³, Target = 0.45 mm³";
+        _monitoringFrequency = "Real-time SPI monitoring, hourly control chart review, weekly summary report";
+        _responsePlan = "If 2 consecutive points outside limits: 1) Stop line 2) Clean stencil 3) Verify with 5 test prints 4) If still OOC, escalate to maintenance";
+        _documentation = "Update SOP-SMT-042 (Paste Printing), Add to PM checklist PM-SMT-015, Update training module TRN-SMT-008";
+        _trainingRequired = "All SMT operators: 2-hour refresher on new cleaning protocol and response procedures";
+        _sustainmentOwner = "SMT Line Supervisor (Tom Martinez), monthly review in Quality Meeting";
+
+        ShowSnackbar("Example data loaded. Click 'Generate' to preview.", Color.Info);
+    }
+
+    private async Task CopyToClipboard()
+    {
+        // Note: In a real implementation, you would inject IJSRuntime and use JavaScript interop
+        // For now, we'll just show a message indicating the copy action
+        ShowSnackbar("Document ready - use browser's copy function on the generated text.", Color.Info);
+    }
+
+    private void ShowSnackbar(string message, Color color)
+    {
+        _snackbarMessage = message;
+        _snackbarColor = color;
+        _snackbarOpen = true;
+    }
+}
