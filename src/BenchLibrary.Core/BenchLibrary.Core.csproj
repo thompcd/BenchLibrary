@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Core domain models, interfaces, and enums for BenchLibrary - a Lean Six Sigma manufacturing library.</Description>
+    <PackageTags>six-sigma;spc;manufacturing;quality;lean</PackageTags>
+  </PropertyGroup>
+
+</Project>

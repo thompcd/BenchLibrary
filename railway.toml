@@ -1,0 +1,17 @@
+# Railway deployment configuration
+# https://docs.railway.app/reference/config-as-code
+
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "dotnet BenchLibrary.Web.dll"
+healthcheckPath = "/health"
+healthcheckTimeout = 100
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+# Environment variable configuration
+# Railway will automatically set PORT
+# Database connection string can be set via Railway dashboard

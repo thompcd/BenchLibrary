@@ -1,0 +1,161 @@
+@page "/capability"
+@inject SpcDataService SpcService
+
+<PageTitle>Process Capability Analysis</PageTitle>
+
+<MudText Typo="Typo.h4" GutterBottom="true">Process Capability Analysis</MudText>
+
+@if (_result != null)
+{
+    <MudGrid>
+        <MudItem xs="12" md="6">
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.h6" GutterBottom="true">Capability Indices</MudText>
+
+                <MudGrid>
+                    <MudItem xs="6">
+                        <MudPaper Class="pa-4 text-center" Elevation="0" Style="background-color: var(--mud-palette-background-grey);">
+                            <MudText Typo="Typo.overline">Cp</MudText>
+                            <MudText Typo="Typo.h4" Color="@GetCpColor(_result.Cp)">@_result.Cp.ToString("F3")</MudText>
+                            <MudText Typo="Typo.caption">Potential Capability</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudPaper Class="pa-4 text-center" Elevation="0" Style="background-color: var(--mud-palette-background-grey);">
+                            <MudText Typo="Typo.overline">Cpk</MudText>
+                            <MudText Typo="Typo.h4" Color="@GetCpkColor(_result.Cpk)">@_result.Cpk.ToString("F3")</MudText>
+                            <MudText Typo="Typo.caption">Actual Capability</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudPaper Class="pa-4 text-center" Elevation="0" Style="background-color: var(--mud-palette-background-grey);">
+                            <MudText Typo="Typo.overline">Pp</MudText>
+                            <MudText Typo="Typo.h4">@_result.Pp.ToString("F3")</MudText>
+                            <MudText Typo="Typo.caption">Process Performance</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudPaper Class="pa-4 text-center" Elevation="0" Style="background-color: var(--mud-palette-background-grey);">
+                            <MudText Typo="Typo.overline">Ppk</MudText>
+                            <MudText Typo="Typo.h4">@_result.Ppk.ToString("F3")</MudText>
+                            <MudText Typo="Typo.caption">Actual Performance</MudText>
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+
+                <MudDivider Class="my-4" />
+
+                <MudAlert Severity="@GetRatingSeverity(_result.Rating)" Class="mt-2">
+                    <strong>Rating:</strong> @_result.Rating
+                    @if (_result.IsCapable)
+                    {
+                        <span> - Process is capable (Cpk ≥ 1.33)</span>
+                    }
+                    else
+                    {
+                        <span> - Process needs improvement</span>
+                    }
+                </MudAlert>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.h6" GutterBottom="true">Process Statistics</MudText>
+
+                <MudSimpleTable Dense="true" Striped="true">
+                    <tbody>
+                        <tr>
+                            <td><strong>Sample Size</strong></td>
+                            <td>@_result.SampleSize</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mean</strong></td>
+                            <td>@_result.Mean.ToString("F4")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Standard Deviation</strong></td>
+                            <td>@_result.StandardDeviation.ToString("F4")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Minimum</strong></td>
+                            <td>@_result.Minimum.ToString("F4")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Maximum</strong></td>
+                            <td>@_result.Maximum.ToString("F4")</td>
+                        </tr>
+                    </tbody>
+                </MudSimpleTable>
+
+                <MudDivider Class="my-4" />
+
+                <MudText Typo="Typo.subtitle2">Specification Limits</MudText>
+                <MudSimpleTable Dense="true">
+                    <tbody>
+                        <tr>
+                            <td><strong>LSL</strong></td>
+                            <td>@_result.LowerSpecLimit.ToString("F2")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>USL</strong></td>
+                            <td>@_result.UpperSpecLimit.ToString("F2")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Target</strong></td>
+                            <td>@_result.Target?.ToString("F2")</td>
+                        </tr>
+                    </tbody>
+                </MudSimpleTable>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.h6" GutterBottom="true">Out-of-Specification Estimates</MudText>
+                <MudGrid>
+                    <MudItem xs="4">
+                        <MudText Typo="Typo.body2">Below LSL: <strong>@_result.PercentBelowLsl.ToString("F4")%</strong></MudText>
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudText Typo="Typo.body2">Above USL: <strong>@_result.PercentAboveUsl.ToString("F4")%</strong></MudText>
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudText Typo="Typo.body2">Total OOS: <strong>@_result.TotalOutOfSpec.ToString("F4")%</strong></MudText>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+}
+
+<MudPaper Class="mt-4 pa-4" Elevation="2">
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="RefreshData">
+        <MudIcon Icon="@Icons.Material.Filled.Refresh" Class="mr-2" /> Regenerate Data
+    </MudButton>
+</MudPaper>
+
+@code {
+    private CapabilityResult? _result;
+
+    protected override void OnInitialized()
+    {
+        RefreshData();
+    }
+
+    private void RefreshData()
+    {
+        _result = SpcService.GetCapabilityAnalysis();
+    }
+
+    private Color GetCpColor(double cp) => cp >= 1.33 ? Color.Success : cp >= 1.0 ? Color.Warning : Color.Error;
+    private Color GetCpkColor(double cpk) => cpk >= 1.33 ? Color.Success : cpk >= 1.0 ? Color.Warning : Color.Error;
+
+    private Severity GetRatingSeverity(CapabilityRating rating) => rating switch
+    {
+        CapabilityRating.WorldClass or CapabilityRating.Excellent => Severity.Success,
+        CapabilityRating.Good => Severity.Info,
+        CapabilityRating.Marginal => Severity.Warning,
+        _ => Severity.Error
+    };
+}

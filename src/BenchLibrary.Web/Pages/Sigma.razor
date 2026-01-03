@@ -1,0 +1,162 @@
+@page "/sigma"
+@inject SpcDataService SpcService
+
+<PageTitle>Sigma Level Calculator</PageTitle>
+
+<MudText Typo="Typo.h4" GutterBottom="true">Sigma Level Calculator</MudText>
+
+<MudGrid>
+    <MudItem xs="12" md="6">
+        <MudPaper Class="pa-4" Elevation="2">
+            <MudText Typo="Typo.h6" GutterBottom="true">Production Data</MudText>
+
+            <MudNumericField @bind-Value="_units" Label="Total Units Produced" Variant="Variant.Outlined"
+                            Min="1" Class="mb-4" />
+            <MudNumericField @bind-Value="_defects" Label="Total Defects Found" Variant="Variant.Outlined"
+                            Min="0" Class="mb-4" />
+            <MudNumericField @bind-Value="_opportunities" Label="Opportunities per Unit" Variant="Variant.Outlined"
+                            Min="1" Class="mb-4" />
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Calculate" FullWidth="true">
+                Calculate Sigma Level
+            </MudButton>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" md="6">
+        @if (_result != null)
+        {
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.h6" GutterBottom="true">Results</MudText>
+
+                <MudPaper Class="pa-6 text-center mb-4" Elevation="0"
+                         Style="@($"background-color: {GetSigmaBackgroundColor(_result.SigmaLevel)};")">
+                    <MudText Typo="Typo.overline">Sigma Level</MudText>
+                    <MudText Typo="Typo.h2" Color="Color.Inherit">@_result.SigmaLevel.ToString("F2")σ</MudText>
+                    <MudText Typo="Typo.subtitle1">@_result.Rating</MudText>
+                </MudPaper>
+
+                <MudSimpleTable Dense="true" Striped="true">
+                    <tbody>
+                        <tr>
+                            <td><strong>DPMO</strong></td>
+                            <td>@_result.Dpmo.ToString("N0")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Yield</strong></td>
+                            <td>@_result.Yield.ToString("F4")%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Defect Rate</strong></td>
+                            <td>@(_result.DefectRate * 100).ToString("F4")%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Opportunities</strong></td>
+                            <td>@_result.TotalOpportunities.ToString("N0")</td>
+                        </tr>
+                    </tbody>
+                </MudSimpleTable>
+
+                <MudAlert Severity="@GetSeverity(_result.Rating)" Class="mt-4">
+                    @_result.IndustryBenchmark
+                </MudAlert>
+            </MudPaper>
+        }
+    </MudItem>
+
+    <MudItem xs="12">
+        <MudPaper Class="pa-4" Elevation="2">
+            <MudText Typo="Typo.h6" GutterBottom="true">Sigma Level Benchmarks</MudText>
+
+            <MudSimpleTable Dense="true" Striped="true" Hover="true">
+                <thead>
+                    <tr>
+                        <th>Sigma Level</th>
+                        <th>DPMO</th>
+                        <th>Yield</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>6σ</td>
+                        <td>3.4</td>
+                        <td>99.99966%</td>
+                        <td><MudChip T="string" Color="Color.Success" Size="Size.Small">World Class</MudChip></td>
+                    </tr>
+                    <tr>
+                        <td>5σ</td>
+                        <td>233</td>
+                        <td>99.977%</td>
+                        <td><MudChip T="string" Color="Color.Success" Size="Size.Small">Excellent</MudChip></td>
+                    </tr>
+                    <tr>
+                        <td>4σ</td>
+                        <td>6,210</td>
+                        <td>99.38%</td>
+                        <td><MudChip T="string" Color="Color.Info" Size="Size.Small">Good</MudChip></td>
+                    </tr>
+                    <tr>
+                        <td>3σ</td>
+                        <td>66,807</td>
+                        <td>93.32%</td>
+                        <td><MudChip T="string" Color="Color.Warning" Size="Size.Small">Average</MudChip></td>
+                    </tr>
+                    <tr>
+                        <td>2σ</td>
+                        <td>308,538</td>
+                        <td>69.15%</td>
+                        <td><MudChip T="string" Color="Color.Error" Size="Size.Small">Below Average</MudChip></td>
+                    </tr>
+                    <tr>
+                        <td>1σ</td>
+                        <td>691,462</td>
+                        <td>30.85%</td>
+                        <td><MudChip T="string" Color="Color.Error" Size="Size.Small">Poor</MudChip></td>
+                    </tr>
+                </tbody>
+            </MudSimpleTable>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private long _units = 10000;
+    private long _defects = 62;
+    private int _opportunities = 10;
+    private SigmaLevelResult? _result;
+
+    protected override void OnInitialized()
+    {
+        Calculate();
+    }
+
+    private void Calculate()
+    {
+        try
+        {
+            _result = SpcService.GetSigmaLevel(_units, _defects, _opportunities);
+        }
+        catch
+        {
+            _result = null;
+        }
+    }
+
+    private string GetSigmaBackgroundColor(double sigma) => sigma switch
+    {
+        >= 6 => "var(--mud-palette-success-lighten)",
+        >= 5 => "var(--mud-palette-success-lighten)",
+        >= 4 => "var(--mud-palette-info-lighten)",
+        >= 3 => "var(--mud-palette-warning-lighten)",
+        _ => "var(--mud-palette-error-lighten)"
+    };
+
+    private Severity GetSeverity(SigmaRating rating) => rating switch
+    {
+        SigmaRating.SixSigma or SigmaRating.FiveSigma => Severity.Success,
+        SigmaRating.FourSigma => Severity.Info,
+        SigmaRating.ThreeSigma => Severity.Warning,
+        _ => Severity.Error
+    };
+}

@@ -1,0 +1,84 @@
+@page "/"
+
+<PageTitle>BenchLibrary - SPC Dashboard</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Welcome to BenchLibrary</MudText>
+<MudText Typo="Typo.subtitle1" Class="mb-4">
+    Open-source .NET library suite for Lean Six Sigma manufacturing processes
+</MudText>
+
+<MudGrid>
+    <MudItem xs="12" md="6" lg="3">
+        <MudCard>
+            <MudCardContent>
+                <MudIcon Icon="@Icons.Material.Filled.ShowChart" Size="Size.Large" Color="Color.Primary" />
+                <MudText Typo="Typo.h6" Class="mt-2">Control Charts</MudText>
+                <MudText Typo="Typo.body2">
+                    Real-time X-bar and R charts with out-of-control detection
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="spc-dashboard">View Charts</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" md="6" lg="3">
+        <MudCard>
+            <MudCardContent>
+                <MudIcon Icon="@Icons.Material.Filled.Speed" Size="Size.Large" Color="Color.Secondary" />
+                <MudText Typo="Typo.h6" Class="mt-2">Process Capability</MudText>
+                <MudText Typo="Typo.body2">
+                    Cp, Cpk analysis with specification limit visualization
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="capability">Analyze</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" md="6" lg="3">
+        <MudCard>
+            <MudCardContent>
+                <MudIcon Icon="@Icons.Material.Filled.BarChart" Size="Size.Large" Color="Color.Warning" />
+                <MudText Typo="Typo.h6" Class="mt-2">Pareto Analysis</MudText>
+                <MudText Typo="Typo.body2">
+                    Identify the vital few defects driving quality issues
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="pareto">View Pareto</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" md="6" lg="3">
+        <MudCard>
+            <MudCardContent>
+                <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Size="Size.Large" Color="Color.Info" />
+                <MudText Typo="Typo.h6" Class="mt-2">Sigma Level</MudText>
+                <MudText Typo="Typo.body2">
+                    Calculate DPMO and sigma level metrics
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="sigma">Calculate</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<MudPaper Class="mt-8 pa-4" Elevation="0">
+    <MudText Typo="Typo.h5" GutterBottom="true">Getting Started</MudText>
+    <MudText Typo="Typo.body1">
+        BenchLibrary provides enterprise-grade tools for statistical process control
+        and six sigma analysis in manufacturing environments. This demo showcases:
+    </MudText>
+    <MudList T="string" Dense="true">
+        <MudListItem Icon="@Icons.Material.Filled.Check">X-bar and R control charts with real-time simulation</MudListItem>
+        <MudListItem Icon="@Icons.Material.Filled.Check">Process capability indices (Cp, Cpk, Pp, Ppk)</MudListItem>
+        <MudListItem Icon="@Icons.Material.Filled.Check">Pareto analysis for defect prioritization</MudListItem>
+        <MudListItem Icon="@Icons.Material.Filled.Check">Sigma level and DPMO calculations</MudListItem>
+    </MudList>
+</MudPaper>

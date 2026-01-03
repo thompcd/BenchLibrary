@@ -41,6 +41,12 @@ secrets.json
 logs/
 *.log
 
+# Local database
+data/
+*.db
+*.db-shm
+*.db-wal
+
 # Temporary files
 *.tmp
 *.temp
