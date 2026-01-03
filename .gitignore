@@ -1,0 +1,52 @@
+# Build results
+bin/
+obj/
+dist/
+*.o
+*.a
+*.lib
+*.dll
+*.exe
+*.so
+*.dylib
+
+# IDE/Editor
+.vs/
+.vscode/
+.idea/
+*.sln.iml
+*.user
+*.suo
+.DS_Store
+Thumbs.db
+
+# Dependencies
+packages/
+.nuget/
+node_modules/
+
+# Test/Coverage
+coverage/
+.nyc_output/
+TestResults/
+*.trx
+
+# Environment/Secrets
+.env
+.env.local
+appsettings.Production.json
+secrets.json
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*~
+.swp
+.swo
+
+# Generated files
+Generated/
