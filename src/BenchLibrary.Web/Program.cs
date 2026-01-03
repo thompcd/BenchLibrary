@@ -25,7 +25,7 @@ if (!string.IsNullOrEmpty(databaseUrl))
 else
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-        ?? "Data Source=benchlibrary.db";
+        ?? "Data Source=data/benchlibrary.db";
     builder.Services.AddBenchLibrarySqlite(connectionString);
 }
 
@@ -61,7 +61,8 @@ app.MapHealthChecks("/health");
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
-// Ensure database is created
+// Ensure data directory and database are created
+Directory.CreateDirectory("data");
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<BenchLibrary.Data.BenchLibraryDbContext>();

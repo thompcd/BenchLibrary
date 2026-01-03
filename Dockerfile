@@ -32,23 +32,27 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 
 # Create non-root user for security
-RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /app
+RUN adduser --disabled-password --gecos '' appuser
+
+# Copy published application with correct ownership
+COPY --from=publish --chown=appuser:appuser /app/publish .
+
+# Create data directory for SQLite (if no DATABASE_URL is set)
+RUN mkdir -p /app/data && chown -R appuser:appuser /app/data
+
+# Switch to non-root user
 USER appuser
 
-# Copy published application
-COPY --from=publish /app/publish .
-
-# Expose port (Railway sets PORT environment variable)
+# Expose port (Railway sets PORT environment variable dynamically)
 EXPOSE 8080
 
 # Set environment variables
-ENV ASPNETCORE_URLS=http://+:8080
+# Note: Do NOT set ASPNETCORE_URLS here - Program.cs handles PORT from Railway
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENV DOTNET_RUNNING_IN_CONTAINER=true
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:8080/health || exit 1
+# Note: Railway handles health checks via railway.toml healthcheckPath
+# Docker HEALTHCHECK removed as aspnet:8.0 image doesn't include curl
 
 # Start the application
 ENTRYPOINT ["dotnet", "BenchLibrary.Web.dll"]
