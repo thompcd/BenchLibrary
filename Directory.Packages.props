@@ -34,4 +34,8 @@
   <ItemGroup Label="Code Analysis">
     <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
   </ItemGroup>
+
+  <ItemGroup Label="Build and Packaging">
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+  </ItemGroup>
 </Project>
